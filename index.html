@@ -1,92 +1,51 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BotBase Hosting - by Diablotxx</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #2f3136;
-      --card-bg: #36393f;
-      --primary: #7289da;
+      --card: #36393f;
+      --primary: #5865f2;
       --text: #dcddde;
       --subtle: #72767d;
       --accent: #43b581;
+      --error: #f04747;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
     body { background: var(--bg); color: var(--text); }
-    header {
-      background: var(--card-bg); padding: 50px 20px; text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    }
-    header h1 { font-size: 2.5rem; color: var(--primary); }
-    header p { margin-top: 10px; color: var(--subtle); font-size: 1.1rem; }
-    nav {
-      background: var(--card-bg); display: flex; justify-content: center;
-      gap: 30px; padding: 15px; border-top: 1px solid #202225; border-bottom: 1px solid #202225;
-    }
-    nav button {
-      background: none; border: none; color: var(--text);
-      font-weight: 600; font-size: 1rem; cursor: pointer; transition: color 0.2s;
-    }
+    header { background: var(--card); padding: 60px 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+    header h1 { font-size: 3rem; color: var(--primary); animation: fadeIn 1s; }
+    header p { margin-top: 10px; color: var(--subtle); font-size: 1.2rem; animation: fadeIn 1.2s; }
+    nav { background: var(--card); display: flex; justify-content: center; gap: 25px; padding: 15px; border-top:1px solid #202225; border-bottom:1px solid #202225; position: sticky; top:0; z-index:100;}
+    nav button { background:none; border:none; color:var(--text); font-weight:600; font-size:1rem; cursor:pointer; transition:color .2s; }
     nav button:hover { color: var(--primary); }
-    main {
-      max-width: 900px; margin: 40px auto; padding: 0 20px;
-    }
-    section { display: none; animation: fadeIn 0.4s ease; }
-    section.active { display: block; }
-    .card {
-      background: var(--card-bg); padding: 30px; border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4); margin-bottom: 30px;
-    }
-    h2 { color: var(--primary); margin-bottom: 20px; }
-    input, textarea {
-      width: 100%; padding: 12px; margin-bottom: 15px;
-      border: none; border-radius: 4px; background: #202225; color: var(--text);
-    }
-    .btn {
-      background: var(--primary); color: white; padding: 12px 24px;
-      border: none; border-radius: 4px; cursor: pointer; font-weight: 600;
-      transition: background 0.2s;
-    }
-    .btn:hover { background: #5b6eae; }
-    .feature-btn {
-      display: inline-block; padding: 8px 16px; margin: 6px;
-      border: 2px solid transparent; border-radius: 4px;
-      background: #202225; color: var(--text); cursor: pointer;
-      transition: all 0.2s;
-    }
-    .feature-btn.active {
-      border-color: var(--accent); color: var(--accent);
-    }
-    .profile {
-      display: flex; align-items: center; gap: 20px; margin-top: 20px;
-    }
-    .profile img {
-      width: 100px; height: 100px; border-radius: 50%;
-      border: 3px solid var(--primary);
-    }
-    footer {
-      text-align: center; padding: 20px; color: var(--subtle); font-size: 0.9rem;
-      border-top: 1px solid #202225; margin-top: 40px;
-    }
-    /* Modal Styles */
-    .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center;
-    }
-    .modal {
-      background: var(--card-bg); padding: 30px; border-radius: 8px;
-      max-width: 400px; width: 90%; text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    }
-    .modal h3 { margin-bottom: 15px; color: var(--text); }
-    .modal p { color: var(--subtle); margin-bottom: 20px; }
-    .modal .btn {
-      background: var(--accent); margin-top: 0;
-    }
-    @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
+    main { max-width: 1000px; margin: 50px auto; padding: 0 20px; }
+    section { display:none; animation: fadeIn .5s; }
+    section.active { display:block; }
+    .card { background: var(--card); padding:30px; border-radius:8px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); margin-bottom:30px; }
+    h2 { color: var(--primary); margin-bottom:20px; }
+    input, textarea, select { width:100%; padding:12px; margin-bottom:15px; border:none; border-radius:6px; background:#202225; color:var(--text); }
+    .btn { background: var(--primary); color:white; padding:12px 24px; border:none; border-radius:6px; cursor:pointer; font-weight:600; transition:background .2s; }
+    .btn:hover { background:#4752c4; }
+    .feature-btn { display:inline-block; padding:8px 16px; margin:6px; border:2px solid transparent; border-radius:4px; background:#202225; color:var(--text); cursor:pointer; transition:all .2s; }
+    .feature-btn.active { border-color: var(--accent); color: var(--accent); }
+    .profile { display:flex; align-items:center; gap:20px; margin-top:20px; }
+    .profile img { width:100px; height:100px; border-radius:50%; border:3px solid var(--primary); }
+    .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:20px; }
+    .grid img { width:100%; border-radius:6px; }
+    .grid .tpl-name { margin-top:10px; font-weight:600; color:var(--text); text-align:center; }
+    .Review { background:#202225; padding:15px; border-radius:6px; margin-bottom:15px; }
+    .Review strong { color:var(--accent); }
+    footer { text-align:center; padding:20px; color:var(--subtle); border-top:1px solid #202225; margin-top:40px; font-size:.85rem; }
+    .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:none; align-items:center; justify-content:center; }
+    .modal { background:var(--card); padding:30px; border-radius:8px; max-width:400px; width:90%; text-align:center; }
+    .modal h3 { margin-bottom:15px; }
+    .modal .btn { margin-top:10px; }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
   </style>
 </head>
 <body>
@@ -97,37 +56,76 @@
   <nav>
     <button onclick="showSection('login')">Login</button>
     <button onclick="showSection('request')">Aanvragen</button>
+    <button onclick="showSection('templates')">Bot Templates</button>
+    <button onclick="showSection('active')">Actieve Bots</button>
+    <button onclick="showSection('reviews')">Reviews</button>
     <button onclick="showSection('about')">Over Mij</button>
   </nav>
   <main>
+    <!-- Login -->
     <section id="login" class="active">
       <div class="card">
         <h2>Inloggen of doorgaan als gast</h2>
         <input type="text" id="username" placeholder="Gebruikersnaam"/>
         <button class="btn" onclick="login()">Inloggen</button>
-        <p style="margin: 15px 0; color: var(--subtle);">— of —</p>
+        <p style="margin:15px 0; color:var(--subtle)">— of —</p>
         <button class="btn" onclick="login(true)">Doorgaan als gast</button>
       </div>
     </section>
+    <!-- Aanvragen -->
     <section id="request">
       <div class="card">
         <h2>Bot Aanvragen</h2>
         <input type="text" placeholder="Naam van je bot"/>
         <textarea rows="3" placeholder="Korte bio over je bot"></textarea>
         <input type="text" placeholder="Prefix (zoals ! of /)"/>
-        <p style="color: var(--subtle);">Selecteer gewenste functies:</p>
+        <p style="color:var(--subtle)">Selecteer gewenste functies:</p>
         <div id="features">
           <button class="feature-btn" onclick="toggleFeature(this)">Moderatie</button>
           <button class="feature-btn" onclick="toggleFeature(this)">Ticketsysteem</button>
           <button class="feature-btn" onclick="toggleFeature(this)">Muziek</button>
           <button class="feature-btn" onclick="toggleFeature(this)">Economy</button>
           <button class="feature-btn" onclick="toggleFeature(this)">Logging</button>
+          <button class="feature-btn" onclick="toggleFeature(this)">Welkomstsysteem</button>
         </div>
         <textarea rows="3" placeholder="Extra wensen..."></textarea>
         <button class="btn" onclick="confirmRequest()">Verzend aanvraag</button>
-        <div id="confirmation" style="margin-top: 20px;"></div>
+        <div id="confirmation" style="margin-top:20px;"></div>
       </div>
     </section>
+    <!-- Bot Templates -->
+    <section id="templates">
+      <div class="card">
+        <h2>Bot Templates</h2>
+        <div class="grid">
+          <div><img src="https://via.placeholder.com/200x150/5865F2/FFFFFF?text=Template+1"/><div class="tpl-name">Welkomst Bot</div></div>
+          <div><img src="https://via.placeholder.com/200x150/5865F2/FFFFFF?text=Template+2"/><div class="tpl-name">Music Bot</div></div>
+          <div><img src="https://via.placeholder.com/200x150/5865F2/FFFFFF?text=Template+3"/><div class="tpl-name">Moderatie Bot</div></div>
+          <div><img src="https://via.placeholder.com/200x150/5865F2/FFFFFF?text=Template+4"/><div class="tpl-name">Economy Bot</div></div>
+        </div>
+      </div>
+    </section>
+    <!-- Actieve Bots -->
+    <section id="active">
+      <div class="card">
+        <h2>Actieve Bots</h2>
+        <div class="grid">
+          <div><img src="https://via.placeholder.com/200x150/43B581/FFFFFF?text=Bot+Alpha"/><div class="tpl-name">Alpha</div></div>
+          <div><img src="https://via.placeholder.com/200x150/43B581/FFFFFF?text=Bot+Beta"/><div class="tpl-name">Beta</div></div>
+          <div><img src="https://via.placeholder.com/200x150/43B581/FFFFFF?text=Bot+Gamma"/><div class="tpl-name">Gamma</div></div>
+        </div>
+      </div>
+    </section>
+    <!-- Reviews -->
+    <section id="reviews">
+      <div class="card">
+        <h2>Reviews</h2>
+        <div class="Review"><strong>@RobinDev:</strong> "Snel, stabiel en precies wat we nodig hadden."</div>
+        <div class="Review"><strong>@LunaRP:</strong> "Geweldige support en custom oplossingen."</div>
+        <div class="Review"><strong>@GameGuild:</strong> "Muziek en economy geïntegreerd zonder problemen."</div>
+      </div>
+    </section>
+    <!-- Over Mij -->
     <section id="about">
       <div class="card">
         <h2>Over Mij</h2>
@@ -136,48 +134,22 @@
           <div class="profile-info">
             <h3>Diablotxx#0001</h3>
             <p>Ik bouw sinds 2022 bots voor Discord servers. Van roleplay tools tot automatische systemen — alles wat jouw community nodig heeft.</p>
-            <p><strong>Skills:</strong> Moderatie, AI, API-koppelingen, muziek, economie</p>
+            <p><strong>Skills:</strong> Moderatie, AI, API, muziek, economy</p>
           </div>
         </div>
       </div>
     </section>
   </main>
-  <footer>
-    &copy; 2025 BotBase Hosting — Powered by Diablotxx
-  </footer>
-  <!-- Modal -->
-  <div class="modal-overlay" id="guestModal">
-    <div class="modal">
-      <h3>Welkom!</h3>
-      <p>Welkom op Discord bot website. U bent doorgegaan als gast.</p>
-      <button class="btn" onclick="closeModal()">Sluiten</button>
-    </div>
-  </div>
+  <footer>&copy; 2025 BotBase Hosting — Powered by Diablotxx</footer>
+  <div class="modal-overlay" id="guestModal"><div class="modal">
+    <h3>Welkom!</h3><p>Welkom op Discord bot website. U bent doorgegaan als gast.</p><button class="btn" onclick="closeModal()">Sluiten</button>
+  </div></div>
   <script>
-    function showSection(id) {
-      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-    function login(asGuest) {
-      const name = asGuest ? 'Gast' : document.getElementById('username').value.trim();
-      if (asGuest) {
-        document.getElementById('guestModal').style.display = 'flex';
-      } else if (name) {
-        alert(`Welkom ${name}!`);
-        showSection('request');
-      }
-    }
-    function closeModal() {
-      document.getElementById('guestModal').style.display = 'none';
-      showSection('request');
-    }
-    function toggleFeature(btn) {
-      btn.classList.toggle('active');
-    }
-    function confirmRequest() {
-      const features = [...document.querySelectorAll('.feature-btn.active')].map(b => b.textContent).join(', ') || 'geen';
-      document.getElementById('confirmation').innerText = `✅ Je aanvraag is verzonden met functies: ${features}`;
-    }
+    function showSection(id) { document.querySelectorAll('section').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+    function login(asGuest){ var name=asGuest?'Gast':document.getElementById('username').value.trim(); if(asGuest){document.getElementById('guestModal').style.display='flex';} }
+    function closeModal(){ document.getElementById('guestModal').style.display='none'; showSection('request'); }
+    function toggleFeature(btn){ btn.classList.toggle('active'); }
+    function confirmRequest(){ var feats=[...document.querySelectorAll('.feature-btn.active')].map(b=>b.textContent).join(', '); document.getElementById('confirmation').innerText='✅ Je aanvraag is verzonden met functies: '+(feats||'geen'); }
   </script>
 </body>
 </html>
