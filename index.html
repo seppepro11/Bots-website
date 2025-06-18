@@ -3,221 +3,254 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BotBase Hosting</title>
+  <title>BotBase Hosting - Discord by Diablotxx</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #2b2d31;
-      --bg-alt: #313338;
+      --card: #313338;
       --primary: #5865f2;
       --text: #f2f3f5;
       --subtle: #b5bac1;
-      --border: #1e1f22;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
 
     body {
       background-color: var(--bg);
       color: var(--text);
-      transition: all 0.3s ease-in-out;
     }
 
-    header, nav, footer {
-      background-color: var(--bg-alt);
+    header {
       text-align: center;
-      padding: 20px;
-      border-bottom: 1px solid var(--border);
+      padding: 50px 20px 30px;
+      background-color: var(--card);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
 
-    header h1 { color: var(--primary); font-size: 2.2rem; }
-    header p { color: var(--subtle); }
+    header h1 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      animation: fadeIn 1s ease;
+    }
+
+    header p {
+      color: var(--subtle);
+      margin-top: 10px;
+      font-size: 1.1rem;
+      animation: fadeIn 1.2s ease;
+    }
 
     nav {
+      background-color: #1e1f22;
       display: flex;
       justify-content: center;
       gap: 30px;
-      flex-wrap: wrap;
+      padding: 15px;
+      border-bottom: 1px solid #000;
     }
 
     nav button {
       background: none;
       border: none;
       color: var(--text);
-      font-weight: 600;
-      font-size: 1rem;
+      font-weight: bold;
       cursor: pointer;
-      transition: color 0.3s;
+      transition: color 0.3s ease;
     }
 
-    nav button:hover { color: var(--primary); }
+    nav button:hover {
+      color: var(--primary);
+    }
 
     main {
       max-width: 960px;
-      margin: 40px auto;
-      padding: 0 20px;
+      margin: 50px auto;
+      padding: 20px;
     }
 
-    section { display: none; animation: fadeIn 0.4s ease-in-out; }
-    section.active { display: block; }
+    section {
+      display: none;
+      animation: fadeIn 0.6s ease;
+    }
+
+    section.active {
+      display: block;
+    }
 
     .card {
-      background-color: var(--bg-alt);
+      background: var(--card);
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
     }
 
-    h2 { color: var(--primary); margin-bottom: 20px; }
-    label { display: block; margin: 10px 0 5px; color: var(--subtle); }
+    h2 {
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    label {
+      margin-top: 15px;
+      display: block;
+      font-weight: 600;
+    }
+
     input, textarea, select {
       width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 6px;
+      padding: 12px;
       border: none;
+      border-radius: 8px;
+      margin-top: 5px;
+      margin-bottom: 20px;
       background-color: #1e1f22;
       color: var(--text);
     }
 
     .btn {
       background-color: var(--primary);
-      border: none;
-      padding: 12px 24px;
-      border-radius: 6px;
       color: white;
-      font-weight: 600;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
     }
 
-    .btn:hover { background-color: #4752c4; }
+    .btn:hover {
+      background-color: #4752c4;
+    }
 
-    #confirmation { margin-top: 20px; font-size: 1.1rem; color: var(--subtle); }
+    .profile {
+      text-align: center;
+      margin-top: 30px;
+      animation: slideUp 0.8s ease;
+    }
+
+    .profile img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid var(--primary);
+      margin-bottom: 10px;
+      transition: transform 0.4s ease;
+    }
+
+    .profile img:hover {
+      transform: scale(1.05);
+    }
+
+    .profile h3 {
+      margin-bottom: 5px;
+    }
 
     footer {
-      margin-top: 40px;
-      font-size: 0.85rem;
+      text-align: center;
+      padding: 30px;
+      margin-top: 50px;
       color: var(--subtle);
+      font-size: 0.85rem;
     }
 
     @keyframes fadeIn {
       from {opacity: 0;}
       to {opacity: 1;}
     }
+
+    @keyframes slideUp {
+      from {transform: translateY(30px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>BotBase Hosting</h1>
-    <p id="headerText">Welkom - Login om door te gaan</p>
+    <p>Custom Discord bots — gebouwd door <strong>Diablotxx</strong></p>
   </header>
 
   <nav>
-    <button onclick="showSection('login')">Login</button>
+    <button onclick="showSection('login')">Inloggen</button>
     <button onclick="showSection('request')">Aanvragen</button>
-    <button onclick="switchLang()">NL/EN</button>
+    <button onclick="showSection('about')">Over ons</button>
   </nav>
 
   <main>
     <section id="login" class="active">
       <div class="card">
-        <h2 id="loginTitle">Log in of ga verder als gast</h2>
+        <h2>Welkom terug!</h2>
         <input type="text" id="username" placeholder="Gebruikersnaam">
-        <button class="btn" onclick="login()">Log in</button>
-        <p style="margin: 15px 0;">— of —</p>
+        <button class="btn" onclick="login()">Inloggen</button>
+        <p style="margin: 20px 0;">— of —</p>
         <button class="btn" onclick="login(true)">Doorgaan als gast</button>
       </div>
     </section>
 
     <section id="request">
       <div class="card">
-        <h2 id="formTitle">Bot Aanvragen</h2>
+        <h2>Bot Aanvragen</h2>
         <label for="botname">Naam van de bot</label>
-        <input type="text" id="botname">
+        <input type="text" id="botname" placeholder="Bijv. GuardianBot">
 
-        <label for="bio">Korte beschrijving</label>
-        <textarea id="bio"></textarea>
+        <label for="bio">Beschrijving van de bot</label>
+        <textarea id="bio" rows="3" placeholder="Bijv. Deze bot beheert mijn RP-server..."></textarea>
 
-        <label for="features">Functies</label>
+        <label for="prefix">Prefix (optioneel)</label>
+        <input type="text" id="prefix" placeholder="Bijv. ! of /">
+
+        <label for="features">Functies (meerdere selecteerbaar)</label>
         <select multiple id="features">
-          <option value="tickets">🎫 Ticketsysteem (€5)</option>
-          <option value="moderatie">🛠 Moderatie (€5)</option>
-          <option value="muziek">🎶 Muziek (€7)</option>
-          <option value="economie">💰 Economy (€10)</option>
-          <option value="logs">🧾 Logsysteem (€3)</option>
+          <option>Moderatie</option>
+          <option>Ticketsysteem</option>
+          <option>Muziek</option>
+          <option>Economy</option>
+          <option>Logging</option>
+          <option>Welkomsysteem</option>
         </select>
 
-        <label for="prefix">Commando prefix</label>
-        <input type="text" id="prefix" placeholder="! of /">
-
         <label for="extra">Extra wensen</label>
-        <textarea id="extra"></textarea>
+        <textarea id="extra" rows="3"></textarea>
 
-        <button class="btn" onclick="submitForm()">Bevestigen</button>
-        <div id="confirmation"></div>
+        <button class="btn" onclick="confirmRequest()">Bevestigen</button>
+        <div id="confirmation" style="margin-top: 20px;"></div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="card">
+        <h2>Over ons</h2>
+        <p>BotBase Hosting is opgericht door <strong>Diablotxx</strong> en bestaat sinds 2022.</p>
+        <p>We bouwen bots voor Discord communities, RP-servers en gaminggroepen met volledige maatwerkopties.</p>
+        <div class="profile">
+          <img src="https://cdn.discordapp.com/attachments/1166407744636856340/1248010537861554226/diablo.jpg" alt="Profiel">
+          <h3>Diablotxx</h3>
+          <p>Lead Developer & Founder</p>
+        </div>
       </div>
     </section>
   </main>
 
   <footer>
-    &copy; 2025 BotBase Hosting — Alle rechten voorbehouden
+    &copy; 2025 BotBase Hosting — Made with 💙 by Diablotxx
   </footer>
 
   <script>
-    const prices = {
-      tickets: 5,
-      moderatie: 5,
-      muziek: 7,
-      economie: 10,
-      logs: 3
-    };
-
-    let currentLang = "nl";
-
     function showSection(id) {
-      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+      document.querySelectorAll("main section").forEach(sec => sec.classList.remove("active"));
       document.getElementById(id).classList.add("active");
     }
 
-    function login(asGuest = false) {
-      const user = asGuest ? "Gast" : document.getElementById("username").value.trim();
-      if (user || asGuest) {
-        document.getElementById("headerText").innerText = `Welkom, ${user}!`;
+    function login(guest = false) {
+      const name = guest ? "Gast" : document.getElementById("username").value.trim();
+      if (name) {
+        alert(`Welkom ${name}!`);
         showSection("request");
       }
     }
 
-    function submitForm() {
-      const selected = Array.from(document.getElementById("features").selectedOptions).map(opt => opt.value);
-      let total = selected.reduce((sum, key) => sum + prices[key], 0);
-      document.getElementById("confirmation").innerText = `Goedemiddag! Uw totaalbedrag komt op €${total},-`;
-    }
-
-    function switchLang() {
-      currentLang = currentLang === "nl" ? "en" : "nl";
-      const t = {
-        nl: {
-          loginTitle: "Log in of ga verder als gast",
-          formTitle: "Bot Aanvragen",
-          placeholder: "Gebruikersnaam",
-          confirm: "Bevestigen",
-          guest: "Doorgaan als gast"
-        },
-        en: {
-          loginTitle: "Login or continue as guest",
-          formTitle: "Request a Bot",
-          placeholder: "Username",
-          confirm: "Confirm",
-          guest: "Continue as Guest"
-        }
-      };
-      const txt = t[currentLang];
-      document.getElementById("loginTitle").innerText = txt.loginTitle;
-      document.getElementById("formTitle").innerText = txt.formTitle;
-      document.getElementById("username").placeholder = txt.placeholder;
-      document.querySelector("button[onclick='submitForm()']").innerText = txt.confirm;
-      document.querySelector("button[onclick='login(true)']").innerText = txt.guest;
+    function confirmRequest() {
+      document.getElementById("confirmation").innerText = "✅ Je aanvraag is verzonden. We nemen snel contact met je op!";
     }
   </script>
 </body>
