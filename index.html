@@ -8,11 +8,20 @@
   <style>
     :root {
       --bg: #f9fafb;
+      --text: #111827;
       --primary: #4f46e5;
       --primary-dark: #4338ca;
       --dark: #1f2937;
       --light: #ffffff;
-      --text: #111827;
+    }
+
+    [data-theme='dark'] {
+      --bg: #1e1e1e;
+      --text: #f3f4f6;
+      --primary: #818cf8;
+      --primary-dark: #6366f1;
+      --dark: #111827;
+      --light: #1f2937;
     }
 
     * {
@@ -26,6 +35,7 @@
       background-color: var(--bg);
       color: var(--text);
       scroll-behavior: smooth;
+      transition: background 0.3s, color 0.3s;
     }
 
     header {
@@ -46,16 +56,27 @@
       z-index: 10;
     }
 
-    nav a {
+    nav a, .toggles button {
       color: #e2e8f0;
       text-decoration: none;
       font-weight: 600;
       font-size: 1rem;
       transition: color 0.3s;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
 
-    nav a:hover {
+    nav a:hover, .toggles button:hover {
       color: white;
+    }
+
+    .toggles {
+      position: absolute;
+      right: 20px;
+      top: 16px;
+      display: flex;
+      gap: 10px;
     }
 
     main {
@@ -72,12 +93,8 @@
       margin-bottom: 20px;
     }
 
-    p {
-      margin-bottom: 12px;
-    }
-
     .card {
-      background: white;
+      background: var(--light);
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
@@ -99,6 +116,7 @@
       font-weight: 600;
       margin-top: 20px;
       transition: background-color 0.3s;
+      border: none;
     }
 
     .btn:hover {
@@ -113,103 +131,71 @@
       font-size: 0.9rem;
     }
 
-    .review {
-      border-left: 4px solid var(--primary);
-      padding-left: 16px;
-      margin-bottom: 20px;
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-    }
-
-    .review strong {
-      color: var(--primary);
-    }
+    .hidden { display: none; }
   </style>
 </head>
-<body>
+<body data-theme="light">
   <header>
-    <h1>BotBase Hosting</h1>
-    <p>Professionele Discord bots – snel, veilig en op maat gebouwd</p>
+    <h1 id="title">BotBase Hosting</h1>
+    <p id="subtitle">Professionele Discord bots – snel, veilig en op maat gebouwd</p>
   </header>
 
+  <div class="toggles">
+    <button onclick="toggleDarkMode()">🌙</button>
+    <button onclick="switchLanguage()">EN</button>
+  </div>
+
   <nav>
-    <a href="#start">Home</a>
-    <a href="#aanvragen">Aanvragen</a>
-    <a href="#functies">Functies</a>
-    <a href="#reviews">Reviews</a>
-    <a href="#over">Over ons</a>
-    <a href="#contact">Contact</a>
+    <a href="#start" id="nav-home">Home</a>
+    <a href="#aanvragen" id="nav-request">Aanvragen</a>
+    <a href="#functies" id="nav-features">Functies</a>
+    <a href="#reviews" id="nav-reviews">Reviews</a>
+    <a href="#contact" id="nav-contact">Contact</a>
   </nav>
 
   <main>
     <section id="start">
       <div class="card">
-        <h2>Welkom bij BotBase Hosting</h2>
-        <p>Wij leveren geavanceerde bots op maat voor jouw Discord-server. Of je nu een community runt, een bedrijfspagina hebt of een roleplayserver bouwt — wij maken het efficiënt en betrouwbaar.</p>
-        <a href="#aanvragen" class="btn">Start je aanvraag</a>
+        <h2 id="welcome-title">Welkom bij BotBase Hosting</h2>
+        <p id="welcome-text">Wij leveren geavanceerde bots op maat voor jouw Discord-server.</p>
+        <a href="#aanvragen" class="btn" id="start-request">Start je aanvraag</a>
       </div>
     </section>
 
     <section id="aanvragen">
       <div class="card">
-        <h2>Bot Aanvragen</h2>
-        <p>Vul het onderstaande formulier in om een offerte te ontvangen voor jouw eigen custom bot.</p>
-        <form>
-          <label for="botname">Naam van je bot</label><br>
-          <input type="text" id="botname" name="botname" required><br><br>
-          <label for="features">Welke functies wil je?</label><br>
-          <textarea id="features" name="features" rows="4" placeholder="Moderatie, tickets, muziek, economy, logs..."></textarea><br><br>
-          <label for="extra">Extra wensen</label><br>
-          <textarea id="extra" name="extra" rows="3"></textarea><br><br>
-          <button class="btn" type="submit">Verzend aanvraag</button>
-        </form>
+        <h2 id="form-title">Bot Aanvragen</h2>
+        <p id="form-desc">Vraag je bot aan via Discord DM: <strong>@Diablotx</strong></p>
       </div>
     </section>
 
     <section id="functies">
       <div class="card">
-        <h2>Populaire Functies</h2>
-        <ul>
-          <li><strong>🎫 Ticketsysteem:</strong> supportkanalen automatisch beheren</li>
-          <li><strong>🛠 Moderatie:</strong> Ban/kick/mute/warnings met logs</li>
-          <li><strong>🎶 Muziek:</strong> YouTube afspelen in voice kanalen</li>
-          <li><strong>💰 Economy:</strong> virtuele munten, winkels & profielen</li>
-          <li><strong>🛡 AutoMod:</strong> scheldfilter, anti-spam, capslock detectie</li>
+        <h2 id="features-title">Populaire Functies</h2>
+        <ul id="features-list">
+          <li>🎫 Ticketsysteem: supportkanalen automatisch beheren</li>
+          <li>🛠 Moderatie: Ban/kick/mute/warnings met logs</li>
+          <li>🎶 Muziek: YouTube afspelen in voice kanalen</li>
+          <li>💰 Economy: virtuele munten, winkels & profielen</li>
+          <li>🛡 AutoMod: scheldfilter, anti-spam, capslock detectie</li>
         </ul>
       </div>
     </section>
 
     <section id="reviews">
       <div class="card">
-        <h2>Klantreviews</h2>
-        <div class="review">
-          <p><strong>@RobinDev:</strong> "Supersnelle service! Mijn RP-server draait soepel met hun bots."</p>
-        </div>
-        <div class="review">
-          <p><strong>@LunaAdmin:</strong> "Makkelijk contact en ze bouwen exact wat je vraagt. Aanrader!"</p>
-        </div>
-        <div class="review">
-          <p><strong>@NicoB:</strong> "Ik kreeg zelfs hulp met het instellen van mijn permissies. Topteam."</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="over">
-      <div class="card">
-        <h2>Over BotBase Hosting</h2>
-        <p>Wij zijn een klein team van developers die zich 100% richt op kwaliteit. Iedere bot wordt vanaf nul opgebouwd, zonder templates of prefab code.</p>
-        <p>Met jaren ervaring in Discord development en communitybeheer zorgen wij voor stabiliteit, snelheid en persoonlijke aanpak.</p>
+        <h2 id="reviews-title">Klantreviews</h2>
+        <p><strong>@RobinDev:</strong> "Supersnelle service! Mijn RP-server draait soepel."</p>
+        <p><strong>@LunaAdmin:</strong> "Ze bouwen exact wat je vraagt. Aanrader!"</p>
+        <p><strong>@NicoB:</strong> "Topteam. Hielpen zelfs met rechten instellen."</p>
       </div>
     </section>
 
     <section id="contact">
       <div class="card">
-        <h2>Contact</h2>
+        <h2 id="contact-title">Contact</h2>
+        <p><strong>Discord:</strong> @Diablotx</p>
         <p><strong>Email:</strong> support@botbasehosting.nl</p>
-        <p><strong>Discord:</strong> BotBaseTeam#1234</p>
-        <p><strong>KVK:</strong> 12345678</p>
       </div>
     </section>
   </main>
@@ -217,5 +203,63 @@
   <footer>
     &copy; 2025 BotBase Hosting – Alle rechten voorbehouden
   </footer>
+
+  <script>
+    let currentLang = "nl";
+
+    function switchLanguage() {
+      currentLang = currentLang === "nl" ? "en" : "nl";
+
+      const translations = {
+        nl: {
+          title: "BotBase Hosting",
+          subtitle: "Professionele Discord bots – snel, veilig en op maat gebouwd",
+          nav: ["Home", "Aanvragen", "Functies", "Reviews", "Contact"],
+          welcome: ["Welkom bij BotBase Hosting", "Wij leveren geavanceerde bots op maat voor jouw Discord-server."],
+          startRequest: "Start je aanvraag",
+          formTitle: "Bot Aanvragen",
+          formDesc: "Vraag je bot aan via Discord DM: @Diablotx",
+          featuresTitle: "Populaire Functies",
+          reviewsTitle: "Klantreviews",
+          contactTitle: "Contact"
+        },
+        en: {
+          title: "BotBase Hosting",
+          subtitle: "Professional Discord bots – fast, secure and custom-built",
+          nav: ["Home", "Request", "Features", "Reviews", "Contact"],
+          welcome: ["Welcome to BotBase Hosting", "We deliver powerful custom bots for your Discord server."],
+          startRequest: "Start your request",
+          formTitle: "Request a Bot",
+          formDesc: "Request your bot via Discord DM: @Diablotx",
+          featuresTitle: "Popular Features",
+          reviewsTitle: "Client Reviews",
+          contactTitle: "Contact"
+        }
+      };
+
+      const t = translations[currentLang];
+      document.getElementById("title").innerText = t.title;
+      document.getElementById("subtitle").innerText = t.subtitle;
+      document.getElementById("nav-home").innerText = t.nav[0];
+      document.getElementById("nav-request").innerText = t.nav[1];
+      document.getElementById("nav-features").innerText = t.nav[2];
+      document.getElementById("nav-reviews").innerText = t.nav[3];
+      document.getElementById("nav-contact").innerText = t.nav[4];
+      document.getElementById("welcome-title").innerText = t.welcome[0];
+      document.getElementById("welcome-text").innerText = t.welcome[1];
+      document.getElementById("start-request").innerText = t.startRequest;
+      document.getElementById("form-title").innerText = t.formTitle;
+      document.getElementById("form-desc").innerText = t.formDesc;
+      document.getElementById("features-title").innerText = t.featuresTitle;
+      document.getElementById("reviews-title").innerText = t.reviewsTitle;
+      document.getElementById("contact-title").innerText = t.contactTitle;
+    }
+
+    function toggleDarkMode() {
+      const body = document.body;
+      const currentTheme = body.getAttribute("data-theme");
+      body.setAttribute("data-theme", currentTheme === "light" ? "dark" : "light");
+    }
+  </script>
 </body>
 </html>
