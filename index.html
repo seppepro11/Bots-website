@@ -50,6 +50,59 @@
     .profile-info ul li { margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
     .profile-info ul li i { color: var(--accent); }
     footer { text-align: center; padding: 20px; border-top:1px solid var(--border); color: var(--subtle); font-size: 0.9rem; }
+
+    /* Popup Styles */
+    .modal-bg {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.6);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-bg.active { display: flex; }
+    .modal {
+      background: var(--card);
+      padding: 35px 30px;
+      border-radius: 12px;
+      min-width: 320px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.4);
+      max-width: 90vw;
+      position: relative;
+      text-align: center;
+      animation: popup .15s;
+    }
+    @keyframes popup { from { transform: scale(.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal input { margin-bottom: 14px;}
+    .close-btn {
+      position: absolute;
+      top: 13px; right: 13px;
+      background: none; border: none; color: var(--subtle); font-size: 1.3rem; cursor: pointer;
+    }
+    .admin-btn {
+      position: fixed;
+      left: 20px;
+      bottom: 18px;
+      width: 42px; height: 42px;
+      background: var(--card);
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.22);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--primary);
+      cursor: pointer;
+      z-index: 1001;
+      transition: background .2s;
+    }
+    .admin-btn:hover { background: var(--primary); color: #fff;}
+    .admin-table { width: 100%; text-align: left; color: var(--text); border-collapse: collapse;}
+    .admin-table th, .admin-table td { padding: 6px 10px; border-bottom: 1px solid var(--border);}
+    .admin-section { margin-top: 20px; }
+    .popup-msg {
+      background: var(--accent); color: #fff; padding: 14px 18px; border-radius: 8px;
+      font-weight: bold; margin-bottom: 10px; margin-top: 10px; animation: popup .15s;
+    }
   </style>
 </head>
 <body>
@@ -80,12 +133,12 @@
     <section id="request">
       <div class="card">
         <h2><i class="fas fa-paper-plane"></i> Bot Aanvragen</h2>
-        <input type="text" placeholder="Naam van je bot"/>
-        <textarea rows="2" placeholder="Korte bio van je bot"></textarea>
-        <input type="text" placeholder="Prefix (bijv. ! of /)"/>
-        <p>Kijk op onze <button class="btn" onclick="show('features')">Functies</button> pagina voor 30 functie-ideeën voor jouw server.</p>
-        <textarea rows="2" placeholder="Extra wensen..."></textarea>
-        <button class="btn" onclick="confirmRequest()"><i class="fas fa-paper-plane"></i> Verzend Aanvraag</button>
+        <input id="botname" type="text" placeholder="Naam van je bot"/>
+        <textarea id="botbio" rows="2" placeholder="Korte bio van je bot"></textarea>
+        <input id="botprefix" type="text" placeholder="Prefix (bijv. ! of /)"/>
+        <p>Kijk op onze <button class="btn" type="button" onclick="show('features')">Functies</button> pagina voor 30 functie-ideeën voor jouw server.</p>
+        <textarea id="botextra" rows="2" placeholder="Extra wensen..."></textarea>
+        <button class="btn" type="button" onclick="confirmRequest()"><i class="fas fa-paper-plane"></i> Verzend Aanvraag</button>
         <div id="confirmation" style="margin-top:15px;"></div>
       </div>
     </section>
@@ -93,7 +146,6 @@
       <div class="card">
         <h2><i class="fas fa-list"></i> Onze Functies</h2>
         <div class="features-list">
-          <!-- 30 features with icons and descriptions -->
           <div class="feature-item"><i class="fas fa-shield-alt"></i> Moderatie: beheer rollen, bans, kicks</div>
           <div class="feature-item"><i class="fas fa-ticket-alt"></i> Ticketsysteem: geavanceerde supportkanalen</div>
           <div class="feature-item"><i class="fas fa-music"></i> Muziek: YouTube & Spotify streaming</div>
@@ -181,24 +233,212 @@
     <section id="signin">
       <div class="card">
         <h2><i class="fas fa-sign-in-alt"></i> Sign In / Maak Account</h2>
-        <input type="text" placeholder="Gebruikersnaam of Email"/>
-        <input type="password" placeholder="Wachtwoord"/>
-        <button class="btn"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+        <input id="login-email" type="text" placeholder="Gebruikersnaam of Email"/>
+        <input id="login-password" type="password" placeholder="Wachtwoord"/>
+        <button class="btn" type="button" onclick="handleLogin()"><i class="fas fa-sign-in-alt"></i> Sign In</button>
         <p style="margin:10px 0; color:var(--subtle);">— of —</p>
-        <button class="btn"><i class="fas fa-user-plus"></i> Maak Account</button>
+        <button class="btn" type="button" onclick="openSignupModal()"><i class="fas fa-user-plus"></i> Maak Account</button>
       </div>
     </section>
   </main>
   <footer>&copy; 2025 BotBase Hosting — Powered by Diablotxx</footer>
+
+  <!-- Account aanmaken modal -->
+  <div class="modal-bg" id="signup-modal">
+    <div class="modal">
+      <button class="close-btn" onclick="closeSignupModal()"><i class="fas fa-times"></i></button>
+      <h2><i class="fas fa-user-plus"></i> Maak Account</h2>
+      <input id="signup-email" type="email" placeholder="Emailadres" required>
+      <input id="signup-pass" type="password" placeholder="Wachtwoord" required>
+      <button class="btn" type="button" onclick="handleSignup()">Account aanmaken</button>
+      <div id="signup-msg"></div>
+    </div>
+  </div>
+
+  <!-- Admin knop -->
+  <button class="admin-btn" onclick="openAdminModal()" title="Admin">
+    <i class="fas fa-user-shield"></i>
+  </button>
+
+  <!-- Admin login en dashboard -->
+  <div class="modal-bg" id="admin-modal">
+    <div class="modal" id="admin-login-section">
+      <button class="close-btn" onclick="closeAdminModal()"><i class="fas fa-times"></i></button>
+      <h2><i class="fas fa-user-shield"></i> Admin Login</h2>
+      <input id="admin-password" type="password" placeholder="Admin wachtwoord">
+      <button class="btn" type="button" onclick="handleAdminLogin()">Bevestigen</button>
+      <div id="admin-msg"></div>
+    </div>
+    <div class="modal" id="admin-dashboard-section" style="display:none;">
+      <button class="close-btn" onclick="closeAdminModal()"><i class="fas fa-times"></i></button>
+      <h2><i class="fas fa-user-shield"></i> Admin Dashboard</h2>
+      <div class="admin-section">
+        <h3>Aanvragen</h3>
+        <table class="admin-table" id="admin-requests-table">
+          <thead><tr><th>Naam</th><th>Bio</th><th>Prefix</th><th>Extra</th><th>Datum</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="admin-section">
+        <h3>Geregistreerde Gebruikers</h3>
+        <table class="admin-table" id="admin-users-table">
+          <thead><tr><th>Email</th><th>Aangemaakt op</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="admin-section">
+        <h3>Bezoekers afgelopen 24u</h3>
+        <ul id="admin-visits-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup Melding -->
+  <div class="modal-bg" id="popup-msg-modal">
+    <div class="modal">
+      <div class="popup-msg" id="popup-msg-text"></div>
+      <button class="btn" onclick="closePopupMsg()">OK</button>
+    </div>
+  </div>
+
   <script>
-    function show(id){ document.querySelectorAll('section').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-    function confirmRequest(){ const feats=[...document.querySelectorAll('.feature-item.active i + h3')].map(e=>e.textContent).join(', '); document.getElementById('confirmation').innerText='✅ Aanvraag verzonden met: '+(feats||'geen'); }
+    // Sections switching
+    function show(id){
+      document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    // Profiel tabjes
     document.querySelectorAll('.profile-nav button').forEach(btn=>btn.addEventListener('click',()=>{
       document.querySelectorAll('.profile-nav button').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
       document.querySelectorAll('.profile-card').forEach(pc=>pc.classList.remove('active'));
       document.getElementById('profile-'+btn.getAttribute('data-user')).classList.add('active');
     }));
+
+    // Bot aanvraag
+    function confirmRequest(){
+      let name = document.getElementById('botname').value.trim();
+      let bio = document.getElementById('botbio').value.trim();
+      let prefix = document.getElementById('botprefix').value.trim();
+      let extra = document.getElementById('botextra').value.trim();
+      if(!name || !bio || !prefix){
+        document.getElementById('confirmation').innerHTML = "<span style='color:#ff6060;'>Vul alle velden in aub.</span>";
+        return;
+      }
+      let aanvragen = JSON.parse(localStorage.getItem('aanvragen')||'[]');
+      aanvragen.push({name,bio,prefix,extra,date:new Date().toLocaleString()});
+      localStorage.setItem('aanvragen',JSON.stringify(aanvragen));
+      document.getElementById('confirmation').innerHTML = "✅ Aanvraag verzonden! <br> <small>We nemen zo snel mogelijk contact op.</small>";
+      document.getElementById('botname').value = '';
+      document.getElementById('botbio').value = '';
+      document.getElementById('botprefix').value = '';
+      document.getElementById('botextra').value = '';
+    }
+
+    // Account maken modal
+    function openSignupModal() {
+      document.getElementById('signup-modal').classList.add('active');
+      document.getElementById('signup-email').value = '';
+      document.getElementById('signup-pass').value = '';
+      document.getElementById('signup-msg').innerHTML = '';
+    }
+    function closeSignupModal() {
+      document.getElementById('signup-modal').classList.remove('active');
+    }
+    function handleSignup(){
+      let email = document.getElementById('signup-email').value.trim();
+      let pass = document.getElementById('signup-pass').value;
+      if(!email || !pass) {
+        document.getElementById('signup-msg').innerHTML = "<span style='color:#ff6060;'>Vul alles in.</span>";
+        return;
+      }
+      let users = JSON.parse(localStorage.getItem('gebruikers')||'[]');
+      if(users.find(u=>u.email===email)){
+        document.getElementById('signup-msg').innerHTML = "<span style='color:#ff6060;'>Email bestaat al.</span>";
+        return;
+      }
+      users.push({email: email, pass: pass, created: new Date().toLocaleString()});
+      localStorage.setItem('gebruikers',JSON.stringify(users));
+      closeSignupModal();
+      showPopupMsg("Je account is goed aangemaakt! Je kunt nu inloggen.");
+    }
+
+    // Login handler
+    function handleLogin() {
+      let email = document.getElementById('login-email').value.trim();
+      let pass = document.getElementById('login-password').value;
+      let users = JSON.parse(localStorage.getItem('gebruikers')||'[]');
+      if(users.find(u=>u.email===email && u.pass===pass)){
+        showPopupMsg("Inloggen gelukt! Welkom terug, "+email+"!");
+      } else {
+        showPopupMsg("Foutieve gegevens. Probeer opnieuw of maak een account.");
+      }
+    }
+
+    // Popup melding
+    function showPopupMsg(msg){
+      document.getElementById('popup-msg-text').innerHTML = msg;
+      document.getElementById('popup-msg-modal').classList.add('active');
+    }
+    function closePopupMsg(){
+      document.getElementById('popup-msg-modal').classList.remove('active');
+    }
+
+    // Admin modal
+    function openAdminModal(){
+      document.getElementById('admin-modal').classList.add('active');
+      document.getElementById('admin-login-section').style.display = '';
+      document.getElementById('admin-dashboard-section').style.display = 'none';
+      document.getElementById('admin-password').value = '';
+      document.getElementById('admin-msg').innerHTML = '';
+    }
+    function closeAdminModal(){
+      document.getElementById('admin-modal').classList.remove('active');
+    }
+    function handleAdminLogin(){
+      let pw = document.getElementById('admin-password').value;
+      if(pw==='seppeislekker'){
+        document.getElementById('admin-login-section').style.display = 'none';
+        document.getElementById('admin-dashboard-section').style.display = '';
+        loadAdminDashboard();
+      } else {
+        document.getElementById('admin-msg').innerHTML = "<span style='color:#ff6060;'>Fout wachtwoord.</span>";
+      }
+    }
+    // Admin dashboard data
+    function loadAdminDashboard(){
+      // Aanvragen
+      let tbody = document.getElementById('admin-requests-table').querySelector('tbody');
+      let aanvragen = JSON.parse(localStorage.getItem('aanvragen')||'[]');
+      tbody.innerHTML = '';
+      aanvragen.forEach(a=>{
+        let tr = document.createElement('tr');
+        tr.innerHTML = `<td>${a.name}</td><td>${a.bio}</td><td>${a.prefix}</td><td>${a.extra}</td><td>${a.date||''}</td>`;
+        tbody.appendChild(tr);
+      });
+      // Gebruikers
+      let utbody = document.getElementById('admin-users-table').querySelector('tbody');
+      let users = JSON.parse(localStorage.getItem('gebruikers')||'[]');
+      utbody.innerHTML = '';
+      users.forEach(u=>{
+        let tr = document.createElement('tr');
+        tr.innerHTML = `<td>${u.email}</td><td>${u.created||''}</td>`;
+        utbody.appendChild(tr);
+      });
+      // Bezoekers afgelopen 24u (dummy op basis van lokaal storage)
+      let visitList = document.getElementById('admin-visits-list');
+      let visits = JSON.parse(localStorage.getItem('visits')||'[]');
+      let last24h = Date.now() - (24*60*60*1000);
+      let filtered = visits.filter(v=>v.ts>last24h);
+      visitList.innerHTML = filtered.map(v=>`<li>${new Date(v.ts).toLocaleString()}</li>`).join('');
+    }
+    // Bezoekregistratie voor demo (localStorage)
+    (function(){
+      let visits = JSON.parse(localStorage.getItem('visits')||'[]');
+      visits.push({ts:Date.now()});
+      localStorage.setItem('visits',JSON.stringify(visits));
+    })();
   </script>
 </body>
 </html>
