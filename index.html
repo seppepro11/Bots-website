@@ -3,100 +3,219 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Druifje Bots</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <title>BotBase Hosting</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --background: #f9fafb;
-      --card: #ffffff;
+      --bg: #f9fafb;
+      --primary: #4f46e5;
+      --primary-dark: #4338ca;
+      --dark: #1f2937;
+      --light: #ffffff;
       --text: #111827;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-    body { background-color: var(--background); color: var(--text); line-height: 1.6; }
-    header, footer { background-color: var(--primary); color: white; text-align: center; padding: 40px 20px; }
-    nav { background-color: #1f2937; padding: 15px 0; display: flex; justify-content: center; gap: 40px; position: sticky; top: 0; z-index: 10; }
-    nav a { color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; }
-    nav a:hover { color: white; }
-    main { max-width: 1080px; margin: 60px auto; padding: 0 20px; }
-    section { margin-bottom: 80px; }
-    h2 { font-size: 2rem; color: var(--primary-dark); margin-bottom: 20px; border-left: 5px solid var(--primary); padding-left: 15px; }
-    .card { background: var(--card); border-radius: 12px; padding: 30px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05); margin-bottom: 30px; transition: transform 0.3s; }
-    .card:hover { transform: translateY(-4px); }
-    form label { font-weight: 600; display: block; margin-top: 20px; margin-bottom: 8px; }
-    input, textarea { width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #d1d5db; background-color: #f3f4f6; margin-bottom: 10px; }
-    button { margin-top: 20px; background-color: var(--primary); color: white; padding: 14px 28px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background-color 0.3s; }
-    button:hover { background-color: var(--primary-dark); }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
-    footer { text-align: center; padding: 40px 20px; background-color: #1f2937; color: #cbd5e1; font-size: 0.9rem; }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      scroll-behavior: smooth;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: var(--dark);
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav a {
+      color: #e2e8f0;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    section {
+      margin-bottom: 80px;
+    }
+
+    h1, h2 {
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin-bottom: 12px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 14px 28px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-dark);
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background-color: var(--dark);
+      color: #cbd5e1;
+      font-size: 0.9rem;
+    }
+
+    .review {
+      border-left: 4px solid var(--primary);
+      padding-left: 16px;
+      margin-bottom: 20px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    }
+
+    .review strong {
+      color: var(--primary);
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Druifje Custom Discord Bots</h1>
-    <p>Jouw eigen bot, professioneel gebouwd en beheerd</p>
+    <h1>BotBase Hosting</h1>
+    <p>Professionele Discord bots – snel, veilig en op maat gebouwd</p>
   </header>
+
   <nav>
-    <a href="#start">Start</a>
-    <a href="#aanvraag">Aanvragen</a>
+    <a href="#start">Home</a>
+    <a href="#aanvragen">Aanvragen</a>
     <a href="#functies">Functies</a>
+    <a href="#reviews">Reviews</a>
     <a href="#over">Over ons</a>
     <a href="#contact">Contact</a>
   </nav>
+
   <main>
     <section id="start">
       <div class="card">
-        <h2>Welkom</h2>
-        <p>Wij bouwen op maat gemaakte Discord bots voor elke community. Kies je functies, geef je stijl aan, en wij regelen de rest.</p>
+        <h2>Welkom bij BotBase Hosting</h2>
+        <p>Wij leveren geavanceerde bots op maat voor jouw Discord-server. Of je nu een community runt, een bedrijfspagina hebt of een roleplayserver bouwt — wij maken het efficiënt en betrouwbaar.</p>
+        <a href="#aanvragen" class="btn">Start je aanvraag</a>
       </div>
     </section>
-    <section id="aanvraag">
-      <h2>Bot Aanvragen</h2>
+
+    <section id="aanvragen">
       <div class="card">
+        <h2>Bot Aanvragen</h2>
+        <p>Vul het onderstaande formulier in om een offerte te ontvangen voor jouw eigen custom bot.</p>
         <form>
-          <label for="botname">Naam van je bot</label>
-          <input type="text" id="botname" name="botname" required>
-          <label for="features">Gewenste functies</label>
-          <textarea id="features" name="features" rows="4" placeholder="Moderatie, muziek, welkom, economy..."></textarea>
-          <label for="prefix">Commando prefix (optioneel)</label>
-          <input type="text" id="prefix" name="prefix">
-          <label for="notes">Extra info / wensen</label>
-          <textarea id="notes" name="notes" rows="3"></textarea>
-          <button type="submit">Verzend aanvraag</button>
+          <label for="botname">Naam van je bot</label><br>
+          <input type="text" id="botname" name="botname" required><br><br>
+          <label for="features">Welke functies wil je?</label><br>
+          <textarea id="features" name="features" rows="4" placeholder="Moderatie, tickets, muziek, economy, logs..."></textarea><br><br>
+          <label for="extra">Extra wensen</label><br>
+          <textarea id="extra" name="extra" rows="3"></textarea><br><br>
+          <button class="btn" type="submit">Verzend aanvraag</button>
         </form>
       </div>
     </section>
+
     <section id="functies">
-      <h2>Populaire Functies</h2>
-      <div class="grid">
-        <div class="card"><h3>Moderatie</h3><p>Ban, kick, mute, waarschuwingen en meer – volledig instelbaar.</p></div>
-        <div class="card"><h3>Ticketsysteem</h3><p>Gebruiksvriendelijk supportsysteem voor je leden.</p></div>
-        <div class="card"><h3>Welkomstberichten</h3><p>Automatische berichten en rollen bij join/leave.</p></div>
-        <div class="card"><h3>Muziek</h3><p>Laat gebruikers muziek afspelen via YouTube links.</p></div>
-        <div class="card"><h3>Economy</h3><p>Virtueel geldsysteem met shops, levels en meer.</p></div>
-        <div class="card"><h3>Logs</h3><p>Bijhouden van acties in kanalen, members en berichten.</p></div>
+      <div class="card">
+        <h2>Populaire Functies</h2>
+        <ul>
+          <li><strong>🎫 Ticketsysteem:</strong> supportkanalen automatisch beheren</li>
+          <li><strong>🛠 Moderatie:</strong> Ban/kick/mute/warnings met logs</li>
+          <li><strong>🎶 Muziek:</strong> YouTube afspelen in voice kanalen</li>
+          <li><strong>💰 Economy:</strong> virtuele munten, winkels & profielen</li>
+          <li><strong>🛡 AutoMod:</strong> scheldfilter, anti-spam, capslock detectie</li>
+        </ul>
       </div>
     </section>
+
+    <section id="reviews">
+      <div class="card">
+        <h2>Klantreviews</h2>
+        <div class="review">
+          <p><strong>@RobinDev:</strong> "Supersnelle service! Mijn RP-server draait soepel met hun bots."</p>
+        </div>
+        <div class="review">
+          <p><strong>@LunaAdmin:</strong> "Makkelijk contact en ze bouwen exact wat je vraagt. Aanrader!"</p>
+        </div>
+        <div class="review">
+          <p><strong>@NicoB:</strong> "Ik kreeg zelfs hulp met het instellen van mijn permissies. Topteam."</p>
+        </div>
+      </div>
+    </section>
+
     <section id="over">
-      <h2>Over Druifje Bots</h2>
       <div class="card">
-        <p><strong>Druifje Bots</strong> bouwt sinds 2020 op maat gemaakte Discord bots voor servers van elke grootte. Wij geloven in eenvoud, kwaliteit en persoonlijke ondersteuning.</p>
-        <p>Geen kant-en-klare templates – jij bepaalt wat je bot kan. Wij zorgen voor techniek, updates en support.</p>
+        <h2>Over BotBase Hosting</h2>
+        <p>Wij zijn een klein team van developers die zich 100% richt op kwaliteit. Iedere bot wordt vanaf nul opgebouwd, zonder templates of prefab code.</p>
+        <p>Met jaren ervaring in Discord development en communitybeheer zorgen wij voor stabiliteit, snelheid en persoonlijke aanpak.</p>
       </div>
     </section>
+
     <section id="contact">
-      <h2>Contact</h2>
       <div class="card">
-        <p><strong>Email:</strong> support@custombots.nl</p>
-        <p><strong>Discord:</strong> Druifje#0001</p>
-        <p><strong>Twitter:</strong> @DruifjeBots</p>
-        <p>We reageren meestal binnen 24 uur.</p>
+        <h2>Contact</h2>
+        <p><strong>Email:</strong> support@botbasehosting.nl</p>
+        <p><strong>Discord:</strong> BotBaseTeam#1234</p>
+        <p><strong>KVK:</strong> 12345678</p>
       </div>
     </section>
   </main>
+
   <footer>
-    &copy; 2025 Druifje Bots - Alle rechten voorbehouden
+    &copy; 2025 BotBase Hosting – Alle rechten voorbehouden
   </footer>
 </body>
 </html>
