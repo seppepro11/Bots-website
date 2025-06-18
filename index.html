@@ -1,201 +1,172 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BotBase Hosting - by Diablotxx</title>
   <style>
     :root {
       --bg: #2f3136;
       --card: #36393f;
-      --primary: #7289da;
+      --primary: #5865f2;
       --text: #dcddde;
       --subtle: #72767d;
       --accent: #43b581;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Courier New', Courier, monospace;
-      line-height: 1.5;
-    }
-    header {
-      background: var(--card);
-      text-align: center;
-      padding: 50px 20px;
-    }
-    header h1, header p {
-      margin-bottom: 10px;
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: 2px solid var(--text);
-      animation: typing 2s steps(30), blink .5s step-end infinite alternate;
-    }
-    nav {
-      background: var(--card);
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: 15px;
-      border-top:1px solid #202225;
-      border-bottom:1px solid #202225;
-    }
-    nav button {
-      background:none;
-      border:none;
-      color:var(--text);
-      font-family: inherit;
-      font-size: 1rem;
-      cursor:pointer;
-      transition:color .3s;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background: var(--bg); color: var(--text); }
+    header { background: var(--card); padding: 50px 20px; text-align: center; }
+    header h1 { color: var(--primary); font-size: 2.5rem; }
+    header p { color: var(--subtle); margin-top: 8px; }
+    nav { background: var(--card); display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: sticky; top: 0; border-top:1px solid #202225; border-bottom:1px solid #202225; z-index:100;}
+    nav .left, nav .right { display: flex; gap: 15px; }
+    nav button { background: none; border: none; color: var(--text); font-weight: 600; cursor: pointer; transition: color .2s; }
     nav button:hover { color: var(--primary); }
-    main { max-width: 900px; margin: 40px auto; padding: 0 20px; }
-    section { display:none; }
-    section.active { display:block; }
-    .card {
-      background: var(--card);
-      padding: 20px;
-      border-radius: 6px;
-      margin-bottom: 30px;
-    }
-    h2, p {
-      font-family: 'Courier New', Courier, monospace;
-      margin-bottom: 10px;
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: 1px solid var(--text);
-      animation: typing 1.5s steps(40), blink .5s step-end infinite alternate;
-    }
-    input, textarea, select {
-      width: 100%; padding: 10px;
-      background: #202225; border: none;
-      color: var(--text); font-family: inherit;
-      margin-bottom: 15px;
-    }
-    .btn {
-      font-family: inherit;
-      background: var(--primary);
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      cursor: pointer;
-    }
-    .btn:hover { background: #5b6eae; }
-    .feature-btn {
-      font-family: inherit;
-      padding: 6px 14px;
-      margin: 4px;
-      border: 2px solid transparent;
-      background: #202225;
-      color: var(--text);
-      cursor: pointer;
-    }
-    .feature-btn.active {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-      gap: 20px;
-    }
-    .grid img {
-      width: 100%; border-radius: 4px;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      border-top:1px solid #202225;
-      color: var(--subtle);
-      font-size: 0.9rem;
-      font-family: 'Courier New', Courier, monospace;
-    }
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-    @keyframes blink {
-      from, to { border-color: transparent; }
-      50% { border-color: var(--text); }
-    }
+    main { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+    section { display: none; animation: fadeIn .5s; }
+    section.active { display: block; }
+    .card { background: var(--card); padding: 30px; border-radius: 8px; margin-bottom: 30px; }
+    h2 { color: var(--primary); margin-bottom: 20px; }
+    p { margin-bottom: 10px; }
+    input, textarea { width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 6px; background: #202225; color: var(--text); }
+    .btn { background: var(--primary); color: #fff; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; transition: background .2s; margin-top: 10px; }
+    .btn:hover { background: #4752c4; }
+    .feature-btn { display: inline-block; padding: 8px 16px; margin: 4px; border: 2px solid transparent; border-radius: 4px; background: #202225; color: var(--text); cursor: pointer; transition: all .2s; }
+    .feature-btn.active { border-color: var(--accent); color: var(--accent); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 20px; }
+    .grid img { width: 100%; border-radius: 6px; }
+    .profile { display: flex; align-items: center; gap: 20px; margin-top: 20px; }
+    .profile img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary); }
+    footer { text-align: center; padding: 20px; border-top:1px solid #202225; color: var(--subtle); font-size: 0.9rem; }
+    .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:none; align-items:center; justify-content:center; }
+    .modal { background: var(--card); padding: 20px; border-radius: 6px; text-align: center; max-width: 300px; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   </style>
 </head>
 <body>
   <header>
     <h1>BotBase Hosting</h1>
-    <p>Custom Discord bots by Diablotxx</p>
+    <p>Custom Discord bots by <strong>Diablotxx</strong></p>
   </header>
   <nav>
-    <button onclick="show('login')">Login</button>
-    <button onclick="show('request')">Aanvragen</button>
-    <button onclick="show('templates')">Bot Templates</button>
-    <button onclick="show('active')">Actieve Bots</button>
-    <button onclick="show('reviews')">Reviews</button>
-    <button onclick="show('about')">Over Mij</button>
+    <div class="left">
+      <button onclick="show('home')">Home</button>
+      <button onclick="show('request')">Aanvragen</button>
+      <button onclick="show('templates')">Templates</button>
+      <button onclick="show('active')">Actieve Bots</button>
+      <button onclick="show('reviews')">Reviews</button>
+      <button onclick="show('about')">Over Mij</button>
+    </div>
+    <div class="right">
+      <button onclick="show('signin')">Sign In / Account</button>
+    </div>
   </nav>
   <main>
-    <section id="login" class="active"><div class="card">
-      <h2>Login of gastmodus</h2>
-      <input type="text" id="username" placeholder="Gebruikersnaam"/>
-      <button class="btn" onclick="login()">Inloggen</button>
-      <p>— of —</p>
-      <button class="btn" onclick="login(true)">Doorgaan als gast</button>
-    </div></section>
-    <section id="request"><div class="card">
-      <h2>Bot Aanvragen</h2>
-      <input placeholder="Naam van je bot"/>
-      <textarea rows="2" placeholder="Bio van je bot"></textarea>
-      <input placeholder="Prefix"/>
-      <p>Selecteer functies:</p>
-      <div id="features">
-        <button class="feature-btn" onclick="toggle(this)">Moderatie</button>
-        <button class="feature-btn" onclick="toggle(this)">Tickets</button>
-        <button class="feature-btn" onclick="toggle(this)">Muziek</button>
-        <button class="feature-btn" onclick="toggle(this)">Economy</button>
-        <button class="feature-btn" onclick="toggle(this)">Logging</button>
+    <section id="home" class="active">
+      <div class="card">
+        <img src="https://source.unsplash.com/1000x300/?discord,bot" alt="Hero"/>
+        <h2>Wie zijn wij</h2>
+        <p>BotBase Hosting is jouw partner voor professionele Discord bots. Sinds 2022 bouwen we maatwerk bots voor communities, RP-servers en gaminggroepen.</p>
+        <p>Betrouwbaar, veilig en altijd up-to-date met de nieuwste features.</p>
+        <button class="btn" onclick="show('request')">Vraag Nu Aan</button>
       </div>
-      <textarea rows="2" placeholder="Extra wensen"></textarea>
-      <button class="btn" onclick="confirm()">Verzend</button>
-      <div id="conf"></div>
-    </div></section>
-    <section id="templates"><div class="card">
-      <h2>Bot Templates</h2>
-      <div class="grid">
-        <div><img src="https://via.placeholder.com/200x150.png?text=Welkom+Bot"/><p class="tpl">Welkom Bot</p></div>
-        <div><img src="https://via.placeholder.com/200x150.png?text=Music+Bot"/><p class="tpl">Music Bot</p></div>
-        <div><img src="https://via.placeholder.com/200x150.png?text=Moderatie+Bot"/><p class="tpl">Moderatie Bot</p></div>
-        <div><img src="https://via.placeholder.com/200x150.png?text=Economy+Bot"/><p class="tpl">Economy Bot</p></div>
+    </section>
+    <section id="request">
+      <div class="card">
+        <h2>Bot Aanvragen</h2>
+        <input type="text" placeholder="Naam van je bot"/>
+        <textarea rows="3" placeholder="Korte bio van je bot"></textarea>
+        <input type="text" placeholder="Prefix (bijv. ! of /)"/>
+        <p>Selecteer gewenste functies:</p>
+        <div id="features">
+          <button class="feature-btn" onclick="toggleFeature(this)">Moderatie</button>
+          <button class="feature-btn" onclick="toggleFeature(this)">Ticketsysteem</button>
+          <button class="feature-btn" onclick="toggleFeature(this)">Muziek</button>
+          <button class="feature-btn" onclick="toggleFeature(this)">Economy</button>
+          <button class="feature-btn" onclick="toggleFeature(this)">Logging</button>
+        </div>
+        <textarea rows="2" placeholder="Extra wensen..."></textarea>
+        <button class="btn" onclick="confirmRequest()">Verzend Aanvraag</button>
+        <div id="confirmation" style="margin-top:15px;"></div>
       </div>
-    </div></section>
-    <section id="active"><div class="card">
-      <h2>Actieve Bots</h2>
-      <div class="grid">
-        <div><img src="https://via.placeholder.com/200x150.png?text=Bot+Alpha"/><p class="tpl">Alpha</p></div>
-        <div><img src="https://via.placeholder.com/200x150.png?text=Bot+Beta"/><p class="tpl">Beta</p></div>
-        <div><img src="https://via.placeholder.com/200x150.png?text=Bot+Gamma"/><p class="tpl">Gamma</p></div>
+    </section>
+    <section id="templates">
+      <div class="card">
+        <h2>Bot Templates</h2>
+        <div class="card">
+          <h3>Roleplay Bot</h3>
+          <p>Functies:</p>
+          <ul>
+            <li>Karakterbeheer</li>
+            <li>Wapen- en inventarisbeheersysteem</li>
+            <li>Systemen voor quests en missies</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Ticket System Bot</h3>
+          <p>Geschikt voor servers tot 5000 leden</p>
+          <p>Functies:</p>
+          <ul>
+            <li>Automatisch ticketkanaal aanmaken</li>
+            <li>Ondersteuningslogs en reacties</li>
+            <li>Toewijzing voor teamleden</li>
+          </ul>
+        </div>
+      </section>
+    <section id="active">
+      <div class="card">
+        <h2>Actieve Bots</h2>
+        <div class="grid">
+          <div><img src="https://via.placeholder.com/200x150/43B581/FFFFFF?text=Bot+Alpha" alt="Bot Alpha"/><p>Alpha</p></div>
+          <div><img src="https://via.placeholder.com/200x150/43B581/FFFFFF?text=Bot+Beta" alt="Bot Beta"/><p>Beta</p></div>
+          <div><img src="https://via.placeholder.com/200x150/43B581/FFFFFF?text=Bot+Gamma" alt="Bot Gamma"/><p>Gamma</p></div>
+        </div>
       </div>
-    </div></section>
-    <section id="reviews"><div class="card">
-      <h2>Reviews</h2>
-      <p><strong>@RobinDev:</strong> "Snel en stabiel."</p>
-      <p><strong>@LunaRP:</strong> "Top service!"</p>
-      <p><strong>@GameGuild:</strong> "Uitstekende bots."</p>
-    </div></section>
-    <section id="about"><div class="card">
-      <h2>Over Mij</h2>
-      <div class="profile"><img src="https://cdn.discordapp.com/attachments/1166407744636856340/1248010537861554226/diablo.jpg"/><div><p>Diablotxx#0001</p><p>Discord bots sinds 2022.</p></div></div>
-    </div></section>
+    </section>
+    <section id="reviews">
+      <div class="card">
+        <h2>Reviews</h2>
+        <div><img src="https://via.placeholder.com/40/FFFFFF/000000?text=R" alt=""><strong>@RobinDev:</strong> "Snel, stabiel en precies wat we nodig hadden."</div>
+        <div><img src="https://via.placeholder.com/40/FFFFFF/000000?text=L" alt=""><strong>@LunaRP:</strong> "Geweldige support en custom oplossingen."</div>
+        <div><img src="https://via.placeholder.com/40/FFFFFF/000000?text=G" alt=""><strong>@GameGuild:</strong> "Muziek en economy geïntegreerd zonder problemen."</div>
+      </div>
+    </section>
+    <section id="about">
+      <div class="card">
+        <h2>Over Mij</h2>
+        <div class="profile">
+          <img src="https://cdn.discordapp.com/attachments/1166407744636856340/1248010537861554226/diablo.jpg" alt="Diablotxx"/>
+          <div>
+            <p><strong>Diablotxx#0001</strong></p>
+            <p>Ik bouw sinds 2022 bots voor Discord servers. Van roleplay tools tot automatische systemen — alles wat jouw community nodig heeft.</p>
+            <p><strong>Skills:</strong> Moderatie, AI, API, muziek, economy</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="signin">
+      <div class="card">
+        <h2>Sign In / Maak Account</h2>
+        <input type="text" placeholder="Gebruikersnaam of Email"/>
+        <input type="password" placeholder="Wachtwoord"/>
+        <button class="btn">Sign In</button>
+        <p style="margin:10px 0; color:var(--subtle);">— of —</p>
+        <button class="btn">Maak Account</button>
+      </div>
+    </section>
   </main>
   <footer>
-    &copy; 2025 BotBase Hosting — Diablotxx
+    &copy; 2025 BotBase Hosting — Powered by Diablotxx
   </footer>
+  <div class="modal-overlay" id="guestModal">
+    <div class="modal"><h3>Welkom!</h3><p>Welkom op Discord bot website. U bent doorgegaan als gast.</p><button class="btn" onclick="closeModal()">Sluiten</button></div>
+  </div>
   <script>
-    function show(id){ document.querySelectorAll('section').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-    function login(guest){ if(guest||document.getElementById('username').value){ alert(guest?'Welkom gast!':'Welkom '+document.getElementById('username').value); show('request'); } }
-    function toggle(btn){ btn.classList.toggle('active'); }
-    function confirm(){ let feats=[...document.querySelectorAll('.feature-btn.active')].map(b=>b.textContent).join(', '); document.getElementById('conf').innerText='✅ Aanvraag verzonden: '+(feats||'geen'); }
+    function show(id) { document.querySelectorAll('section').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+    function login(asGuest) { if(asGuest) { document.getElementById('guestModal').style.display = 'flex'; } }
+    function closeModal() { document.getElementById('guestModal').style.display = 'none'; show('home'); }
+    function toggleFeature(btn) { btn.classList.toggle('active'); }
+    function confirmRequest() { const feats = [...document.querySelectorAll('.feature-btn.active')].map(b=>b.textContent).join(', '); document.getElementById('confirmation').innerText = '✅ Je aanvraag is verzonden met functies: '+(feats || 'geen'); }
   </script>
 </body>
 </html>
